@@ -160,10 +160,10 @@ git submodule update --init --remote --recursive
 conda env create --name cudf_dev --file conda/environments/cudf_dev_cuda10.0.yml
 # activate the environment
 source activate cudf_dev
-
-- If conda is already in PATH, perform `conda activate cudf_dev`
+#If conda is already in PATH, perform `conda activate cudf_dev`
 ```
-- If using CUDA 9.2, create the environment with `conda env create --name cudf_dev --file conda/environments/cudf_dev_cuda9.2.yml` instead. For other CUDA versions, check conda/environments/cudf_dev_cuda*.yml.
+- If using CUDA 9.2, create the environment with `conda env create --name cudf_dev --file conda/environments/cudf_dev_cuda9.2.yml` instead.
+- For other CUDA versions, check the corresponding cudf_dev_cuda*.yml file in conda/environments
 
 - Build and install `libcudf` after its dependencies. CMake depends on the `nvcc` executable being on your path or defined in `$CUDACXX`.
 ```bash
@@ -184,7 +184,11 @@ $ make install                                                            # inst
 - As a convenience, a `build.sh` script is provided in `$CUDF_HOME`. To execute the same build commands above, run the script as shown below.  Note that the libraries will be installed to the location set in `$INSTALL_PREFIX` if set (i.e. `export INSTALL_PREFIX=/install/path`), otherwise to `$CONDA_PREFIX`.
 ```bash
 $ cd $CUDF_HOME
-$ ./build.sh libcudf                   # compile the cuDF C++ libraries and install them to $INSTALL_PREFIX if set, otherwise $CONDA_PREFIX
+$ ./build.sh                                                              # To build both C++ and Python cuDF versions with their dependencies
+```
+- To build only the C++ component with the script
+```bash
+$ ./build.sh libnvstrings libcudf                                         # Build only the cuDF C++ components and install them to $INSTALL_PREFIX if set, otherwise $CONDA_PREFIX
 ```
 
 - To run tests (Optional):
